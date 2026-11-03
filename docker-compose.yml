@@ -1,0 +1,30 @@
+services:
+ web:
+  build:
+   context: ./src
+   dockerfile: Dockerfile
+   target: runtime
+  ports:
+   - "${APP_PORT}:5000"
+  environment:
+   - APP_PORT=${APP_PORT}
+  secrets:
+   - api_key
+  volumes:
+   - "./logs:/root/.npm/_logs/"
+   - "./logs:/code/logs"
+   - "./src/static:/code/static/"
+   - "./src/templates/index.html:/code/index.html:ro"
+  networks:
+   3_1_net:
+    ipv4_address: "10.5.0.5"
+secrets:
+ api_key:
+  file: ./src/secret.txt
+networks:
+ 3_1_net:
+  driver: bridge
+  ipam:
+   config:
+    - subnet: "10.5.0.0/16"
+      gateway: "10.5.0.1"

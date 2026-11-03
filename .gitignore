@@ -1,0 +1,6 @@
+*/node_modules/*
+*.env
+secret.txt
+package-lock.json
+/src/index.js
+/logs
